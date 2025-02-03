@@ -18,24 +18,35 @@ class TareaService:
 
     @staticmethod
     def crear_tarea(data):
-        # Convertir la fecha tentativa si se proporciona
-        fecha_tentativa = None
-        if 'fecha_tentativa_finalizacion' in data:
-            fecha_tentativa = datetime.fromisoformat(data['fecha_tentativa_finalizacion'])
-            if fecha_tentativa < datetime.utcnow():
-                return {"error": "La fecha tentativa no puede ser anterior a la fecha actual"}, 400
+        # Obtener la fecha tentativa si está presente
+        fecha_tentativa = data.get('fecha_tentativa_finalizacion')
+        
+        # Verificar si la fecha tentativa es válida
+        if fecha_tentativa:
+            try:
+                # Intentar convertir la fecha a datetime
+                fecha_tentativa = datetime.fromisoformat(fecha_tentativa)
+                # Verificar si la fecha tentativa es anterior a la fecha actual
+                if fecha_tentativa < datetime.utcnow():
+                    return {"error": "La fecha tentativa no puede ser anterior a la fecha actual"}, 400
+            except ValueError:
+                # Si la conversión falla, devolver un error
+                return {"error": "Formato de fecha tentativa no válido"}, 400
 
+        # Crear la nueva tarea
         nueva_tarea = Tarea(
             texto=data['texto'],
             fecha_creacion=datetime.utcnow(),
-            fecha_tentativa_finalizacion=fecha_tentativa,
+            fecha_tentativa_finalizacion=fecha_tentativa,  # Puede ser None si no se proporcionó
             estado=data.get('estado', 'Sin Empezar'),
             id_usuario=data['id_usuario'],
             id_categoria=data['id_categoria']
         )
 
+        # Agregar la tarea a la base de datos y confirmar el commit
         db.session.add(nueva_tarea)
         db.session.commit()
+        
         return nueva_tarea
 
     @staticmethod

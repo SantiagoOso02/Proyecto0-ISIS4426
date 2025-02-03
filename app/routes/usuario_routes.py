@@ -32,11 +32,16 @@ def obtener_perfil():
         "imagen_perfil": usuario.imagen_perfil
     }), 200
 
+
 # Obtener la lista de tareas de un usuario
-@usuario_bp.route('/<int:id>/tareas', methods=['GET'])
+@usuario_bp.route('/tareas', methods=['GET'])
 @jwt_required()
-def obtener_tareas_por_usuario(id):
-    tareas = TareaService.obtener_tareas_por_usuario(id)
+def obtener_tareas_por_usuario():
+    # Obtener el ID del usuario desde el token JWT
+    id_usuario = get_jwt_identity()
+
+    # Filtrar las tareas por el id_usuario
+    tareas = TareaService.obtener_tareas_por_usuario(id_usuario)
 
     if not tareas:
         return jsonify({'mensaje': 'No se encontraron tareas para este usuario'}), 404
@@ -50,6 +55,7 @@ def obtener_tareas_por_usuario(id):
         'id_usuario': tarea.id_usuario,
         'id_categoria': tarea.id_categoria
     } for tarea in tareas]), 200
+
 
 # Crear un nuevo usuario
 @usuario_bp.route('/', methods=['POST'])

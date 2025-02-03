@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app.services.tarea_service import TareaService
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
 tarea_bp = Blueprint('tareas', __name__)
 
@@ -41,13 +41,19 @@ def obtener_tarea(id):
 @jwt_required()
 def crear_tarea():
     data = request.get_json()
-    tarea = TareaService.crear_tarea(data)
+
+    # Obtener el ID del usuario desde el token
+    id_usuario = get_jwt_identity()  # Aquí obtienes el ID del usuario autenticado
+
+    # Ahora pasas el ID del usuario al crear la tarea
+    tarea = TareaService.crear_tarea({**data, 'id_usuario': id_usuario})
 
     # Si la función devuelve una tupla, es un error (mensaje, código HTTP)
     if isinstance(tarea, tuple):
         return jsonify(tarea[0]), tarea[1]
 
     return jsonify({'mensaje': 'Tarea creada exitosamente', 'id': tarea.id}), 201
+
 # Actualizar una tarea
 @tarea_bp.route('/<int:id>', methods=['PUT'])
 @jwt_required()
