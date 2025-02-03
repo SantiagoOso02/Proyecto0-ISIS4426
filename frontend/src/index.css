@@ -1,0 +1,75 @@
+/* Estilos generales para la página */
+body {
+  background-color: #f8f9fa;  /* Fondo gris claro */
+  font-family: 'Arial', sans-serif;
+}
+
+/* Estilo para el contenedor principal */
+.container {
+  max-width: 600px;
+  padding-top: 50px;
+}
+
+/* Estilo para las tarjetas */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabecera de la tarjeta */
+.card-header {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Campos de formulario */
+input.form-control {
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  padding: 12px;
+}
+
+/* Botón de registro */
+button[type="submit"] {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 12px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para el enlace de "Iniciar sesión" */
+button[type="button"] {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+button[type="button"]:hover {
+  color: #0056b3;
+}
+
+/* Mensaje de error */
+.alert-danger {
+  font-size: 14px;
+  padding: 10px;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+/* Espaciado extra en el texto del formulario */
+.form-label {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
