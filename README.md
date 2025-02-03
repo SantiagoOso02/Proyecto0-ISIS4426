@@ -2,6 +2,8 @@
 
 Este proyecto es parte del curso ISIS4426 y consiste en una aplicación web que incluye un **backend en Flask** y un **frontend en React**. Para ejecutar el proyecto en tu máquina local, sigue los pasos a continuación.
 
+Video: https://youtu.be/UySf26TFezY
+
 ## Requisitos Previos
 
 Antes de empezar, asegúrate de tener instalados los siguientes programas en tu máquina:
